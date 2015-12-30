@@ -16,26 +16,31 @@ import java.util.HashMap;
 public class MainActivity extends ActionBarActivity {
 
     HashMap<Player, View> playerGroupViews = new HashMap<>();
+    LinearLayout playerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        LinearLayout playerLayout = (LinearLayout) this.findViewById(R.id.playerLayout);
+        this.playerLayout = (LinearLayout) this.findViewById(R.id.playerLayout);
 
         Player[] players = {new Player("John"), new Player("Bob"), new Player("Greg")};
-        for (Player p : players) {
-            Monop.addPlayer(p);
-            View view = this.createPlayerGroupView(p);
-            playerLayout.addView(view);
-            this.playerGroupViews.put(p, view);
-        }
+        for (Player p : players) Monop.addPlayer(p);
+        this.createPlayerGroupViews();
     }
 
     @Override
     protected void onActivityResult(int requstCode, int resultCode, Intent data) {
-        for (Player p : Monop.getPlayers()) {
-            this.updatePlayerGroupView(this.playerGroupViews.get(p), p);
+        this.createPlayerGroupViews();
+    }
+
+    void createPlayerGroupViews() {
+        this.playerLayout.removeAllViews();
+        this.playerGroupViews.clear();
+        for (Player player : Monop.getPlayers()) {
+            View view = this.createPlayerGroupView(player);
+            this.playerLayout.addView(view);
+            this.playerGroupViews.put(player, view);
         }
     }
 
@@ -81,6 +86,9 @@ public class MainActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        } else if (id == R.id.action_edit_players) {
+            startActivityForResult(new Intent(this.getBaseContext(), EditPlayersActivity.class), 0, null);
             return true;
         }
 
