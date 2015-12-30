@@ -1,5 +1,6 @@
 package com.github.parkm.monop;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -21,11 +22,11 @@ public class MainActivity extends ActionBarActivity {
 
         Player[] players = {new Player("John"), new Player("Bob")};
         for (Player p : players) {
-            playerLayout.addView(this.createPlayerGroupView(p.name));
+            playerLayout.addView(this.createPlayerGroupView(p));
         }
     }
 
-    View createPlayerGroupView(String playerName) {
+    View createPlayerGroupView(final Player player) {
         RelativeLayout rl = (RelativeLayout) getLayoutInflater().inflate(R.layout.player_action_group, null);
         TextView playerNameView = (TextView) rl.findViewById(R.id.playerName);
         final TextView playerMoney = (TextView) rl.findViewById(R.id.playerMoney);
@@ -33,10 +34,12 @@ public class MainActivity extends ActionBarActivity {
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                playerMoney.setText("$10");
+                Intent i = new Intent(getBaseContext(), PlayerActionActivity.class);
+                i.putExtra("player", player);
+                startActivity(i);
             }
         });
-        playerNameView.setText(playerName);
+        playerNameView.setText(player.name);
         return rl;
     }
 
