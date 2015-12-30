@@ -32,13 +32,35 @@ public class PlayerActionActivity extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 Player selectedPlayer = playerBySpinnerIndex.get(playerListSpinner.getSelectedItemPosition());
-                TextView moneyAmount = (TextView) findViewById(R.id.moneyAmount);
-                int money = Integer.parseInt(moneyAmount.getText().toString());
+                int money = getIntegerValueForTextView(R.id.moneyAmount);
                 activePlayer.balance -= money;
                 selectedPlayer.balance += money;
                 finish();
             }
         });
+
+        Button addMoneyButton = (Button) this.findViewById(R.id.addMoneyButton);
+        addMoneyButton.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activePlayer.balance += getIntegerValueForTextView(R.id.addMoneyAmount);
+                finish();
+            }
+        });
+
+        Button subMoneyButton = (Button) this.findViewById(R.id.subtractMoneyButton);
+        subMoneyButton.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activePlayer.balance -= getIntegerValueForTextView(R.id.subtractMoneyAmount);
+                finish();
+            }
+        });
+    }
+
+    int getIntegerValueForTextView(int id) {
+        TextView view = (TextView) findViewById(id);
+        return Integer.parseInt(view.getText().toString());
     }
 
     Spinner addPlayerNamesToSpinner() {
