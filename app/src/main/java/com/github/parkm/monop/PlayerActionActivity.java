@@ -32,8 +32,10 @@ public class PlayerActionActivity extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 Player selectedPlayer = playerBySpinnerIndex.get(playerListSpinner.getSelectedItemPosition());
-                activePlayer.balance -= 200;
-                selectedPlayer.balance += 200;
+                TextView moneyAmount = (TextView) findViewById(R.id.moneyAmount);
+                int money = Integer.parseInt(moneyAmount.getText().toString());
+                activePlayer.balance -= money;
+                selectedPlayer.balance += money;
                 finish();
             }
         });
