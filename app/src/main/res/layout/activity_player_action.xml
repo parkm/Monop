@@ -38,6 +38,12 @@
                 android:layout_width="137dp"
                 android:layout_height="52dp"
                 android:id="@+id/playerListSpinner" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Submit"
+                android:id="@+id/submitButton" />
         </LinearLayout>
     </LinearLayout>
 

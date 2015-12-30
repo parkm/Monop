@@ -5,8 +5,19 @@ import android.os.Parcelable;
 
 public class Player implements Parcelable {
     public String name;
+    public int balance = 1500;
+    int id;
+
     public Player(String name) {
         this.name = name;
+    }
+
+    public int setId(int id) {
+        return this.id = id;
+    }
+
+    public int getId() {
+        return this.id;
     }
 
     @Override
